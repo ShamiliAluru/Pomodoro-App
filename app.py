@@ -20,6 +20,11 @@ st.markdown(
       .eyebrow {font-size: .78rem; font-weight: 700; letter-spacing: .1em; color: #637381;}
       .calendar-heading {text-align: center; font-weight: 650; padding-top: .35rem;}
       div.stButton > button {border-radius: 7px;}
+      /* Streamlit's default button padding clips two-digit dates in the compact calendar. */
+      div[data-testid="stHorizontalBlock"] div[data-testid="column"] div.stButton > button {
+        min-width: 0 !important; padding-left: .15rem !important; padding-right: .15rem !important;
+        white-space: nowrap; font-size: .88rem;
+      }
       @media (max-width: 1000px) { .block-container {padding-left: .75rem; padding-right: .75rem;} }
     </style>
     """,
@@ -129,19 +134,19 @@ with calendar_col:
             st.session_state.month = date(y + (m == 13), 1 if m == 13 else m, 1)
             st.rerun()
 
-        weekdays = st.columns(7, gap="small")
+        weekdays = st.columns(7, gap=None)
         for col, day_name in zip(weekdays, ["M", "T", "W", "T", "F", "S", "S"]):
             col.markdown(f"<div style='text-align:center;color:#718096;font-size:.8rem'>{day_name}</div>", unsafe_allow_html=True)
         for week in calendar.monthcalendar(month.year, month.month):
-            cols = st.columns(7, gap="small")
+            cols = st.columns(7, gap=None)
             for col, day in zip(cols, week):
                 if day == 0:
                     col.write("")
                     continue
                 key = date(month.year, month.month, day).isoformat()
-                marker = " ·" if st.session_state.notes.get(key) else ""
-                if col.button(f"{day}{marker}", key=f"calendar_{key}", use_container_width=True,
-                              type="primary" if st.session_state.selected_day == key else "secondary"):
+                has_note = bool(st.session_state.notes.get(key))
+                if col.button(str(day), key=f"calendar_{key}", use_container_width=True,
+                              type="primary" if st.session_state.selected_day == key or has_note else "secondary"):
                     st.session_state.selected_day = key
                     st.rerun()
 
