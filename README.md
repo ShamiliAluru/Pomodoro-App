@@ -1,16 +1,13 @@
 # Pomodoro Pro — Streamlit
 
-A browser version of the Tkinter Pomodoro Pro app with a focus timer, checklist, monthly calendar, and daily notes.
+This is the web version of the Pomodoro Pro concept, built with **Python + Streamlit**. It includes the 25-minute work timer, 5-minute short breaks, a 15-minute break after each fourth work session, a task checklist, and monthly calendar notes.
 
 ## Run locally
 
-```bash
-python -m venv .venv
-```
-
-On Windows PowerShell:
+Open this folder in VS Code, then run in its terminal:
 
 ```powershell
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 streamlit run app.py
@@ -18,9 +15,9 @@ streamlit run app.py
 
 ## Deploy on Streamlit Community Cloud
 
-1. Create a GitHub repository and upload `app.py`, `requirements.txt`, and this README.
+1. Upload `app.py` and `requirements.txt` to a GitHub repository.
 2. Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) with GitHub.
-3. Choose **Create app**, select the repository and branch, and set the main file path to `app.py` (or the subfolder path if you uploaded this folder inside a larger repository).
-4. Deploy. Streamlit will install `requirements.txt` and provide a shareable URL.
+3. Choose **Create app**, select the repository and branch, and set the main file path to `app.py` (or its subfolder path).
+4. Deploy; Streamlit installs the listed dependencies and gives you a public app URL.
 
-This starter keeps data in Streamlit session state. Tasks, notes, and timer progress are not backed up across sessions or shared between users. Use a database such as Supabase or SQLite with persistent hosting if you need durable data.
+The app keeps its data in Streamlit session state, so tasks and notes are temporary and belong to the current browser session. Persistent, cross-visit data would require a database.
